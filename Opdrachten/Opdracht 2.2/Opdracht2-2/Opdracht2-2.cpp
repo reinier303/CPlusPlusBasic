@@ -5,35 +5,13 @@
 #include <fstream>
 #include <string>
 
-char* ReverseString(char * pString)
-{
-	if (NULL == pString)
-	{
-		return NULL;
-	}
-
-	char* pStart = pString;
-	char* pEnd = pStart + strlen(pString) - 1;
-
-	while (pEnd > pStart)
-	{
-		char temp = *pStart;
-		*pStart = *pEnd;
-		* pEnd = temp;
-
-		pStart++;
-		pEnd--;
-	}
-
-	return pString;
-}
-
 int main()
 {
-	//Get string from file
+	//Create string and stream.
 	std::string stringHolder;
 	std::ifstream myFile1;
 
+	//Open file.
 	myFile1.open("File1.txt");
 	if (!myFile1) 
 	{
@@ -43,9 +21,14 @@ int main()
 	std::getline(myFile1, stringHolder);
 	myFile1.close();
 
+	//Show string and reverse it.
 	std::cout<< "string: " << stringHolder << " found in file" << std::endl;
 
+	std::reverse(stringHolder.begin(), stringHolder.end());
 
+	std::cout << "Reverted string to: " << stringHolder << std::endl;
+
+	//Put string in second file.
 	std::ofstream myFile2;
 	myFile2.open("File2.txt");
 	if (!myFile2) 
@@ -53,7 +36,7 @@ int main()
 		std::cout << "File opening error" << std::endl;
 		exit(1);
 	}
-	myFile2 << "MyNameJeff";
+	myFile2 << stringHolder;
 
 	myFile2.close();
 
